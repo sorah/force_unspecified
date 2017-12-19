@@ -23,7 +23,8 @@ module ForceUnspecified
       end
 
       modified_saml_request = saml_request.
-        gsub(/(['"])urn:oasis:names:tc:SAML:1.1:nameid-format:.+?(["'])/, '\1urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified\2')
+        gsub(/(['"])urn:oasis:names:tc:SAML:1.1:nameid-format:.+?(["'])/, '\1urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified\2').
+        gsub("#{request.base_url}/", '')
       param = encode_saml_request(modified_saml_request)
 
       [302, {'Location' => "#{next_hop}?SAMLRequest=#{param}"}, ['']]
