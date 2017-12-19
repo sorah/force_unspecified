@@ -1,0 +1,24 @@
+PATH
+  remote: .
+  specs:
+    force_unspecified (0.1.0)
+      rack
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    puma (3.11.0)
+    rack (2.0.3)
+    rake (12.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  force_unspecified!
+  puma
+  rake
+
+BUNDLED WITH
+   1.16.0
