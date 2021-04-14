@@ -9,7 +9,7 @@ module ForceUnspecified
       end
 
       def result
-        @xml.gsub(Regexp.escape("#{@request.request.base_url}#{@request.request.path}"), @request.next_hop)
+        @xml.gsub("#{@request.request.base_url}#{@request.request.path}", @request.next_hop)
       end
     end
   end

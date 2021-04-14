@@ -32,7 +32,7 @@ module ForceUnspecified
         return [403, {'Content-Type' => 'text/plain'}, ["next hop unallowed\n"]]
       end
 
-      modified_saml_request = manipulations.inject(saml_request.gsub("#{request.base_url}/", '')) { |r,i| i.new(r, self).result }
+      modified_saml_request = manipulations.inject(saml_request) { |r,i| i.new(r, self).result }
       param = encode_saml_request(modified_saml_request)
 
       [302, {'Location' => "#{next_hop}?SAMLRequest=#{param}"}, ['']]
