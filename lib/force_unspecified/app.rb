@@ -101,7 +101,7 @@ Usage: #{request.base_url}/manipulate/NameIDPolicy/login.example.org/saml?SAMLRe
 
     def allowed_next_hop_list
       return @allowed_next_hop_list if defined? @allowed_next_hop_list
-      @allowed_next_hop_list = ENV['ALLOWED_NEXT_HOP_LIST']&.split(?,) || nil
+      @allowed_next_hop_list = ENV['ALLOWED_NEXT_HOP_LIST']&.split(?,)
     end
   end
 end
