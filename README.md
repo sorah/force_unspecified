@@ -1,9 +1,19 @@
-# ForceUnspecified: Rack app redirects to a SAML IdP URL with changing NameIDPolicy Format in SAMLRequest to unspecified
+# ForceUnspecified: Rack app redirects to a SAML IdP URL with maniplating SAMLRequest
+
+## Supported manipulation
+
+### RequestedAuthnContext 
+
+Remove `samlp:RequestedAuthnContext` from request to allow authenticating users using authentication methods other than passwords (e.g. X.509, Azure AD passwordless)
+
+### NameIDPolicy
 
 - Before: `<samlp:NameIDPolicy AllowCreate='true' Format='urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'/>`
 - After: `<samlp:NameIDPolicy AllowCreate='true' Format='urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified'/>`
 
 Some IdP, e.g. Azure Active Directory, forces user's _true_ identifier even if an admin set customized User Identifier to the IdP, when a SAML request comes with `NameIDPolicy` Format=`emailAddress`. This is a simple Rack app that replaces all policies to `unspecified` before passing to IdP.
+
+This may be unneeded as of Apr 2021 (Azure AD now allows to configure NameID details)
 
 ## Installation
 
@@ -20,9 +30,9 @@ run ForceUnspecified
 
 ## Usage
 
-1. Set your RP to use `https://force_unspecified/ORIGINAL_URL` as a IdP SAML URL.
+1. Set your RP to use `https://force_unspecified/manipulate/OPTIONS/ORIGINAL_URL` as a IdP SAML URL.
    - (where `force_unspecified` is your deployment URL of this app, and `ORIGINAL_URL` is your original IdP SAML URL)
-   - e.g. `https://force_unspecified/https://login.example.org/SAML`
+   - e.g. `https://force_unspecified/manipulate/RequestedAuthnContext,NameIDPolicy/login.example.org/SAML`
 2. When RP sends a user to this app, this app changes `nameid-format` to `unspecified`, then redirects to the IdP.
 3. Happiness
 
