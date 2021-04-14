@@ -12,6 +12,7 @@ module ForceUnspecified
         begin
           request.search('samlp|RequestedAuthnContext').each(&:remove)
         rescue Nokogiri::XML::XPath::SyntaxError; nil # ignore undefined namespace prefix
+        end
         request.to_xml
       end
     end
